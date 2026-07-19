@@ -11,9 +11,16 @@ from src import views
 
 @pytest.mark.parametrize(
     "hour, expected",
-    [(6, "Доброе утро"), (11, "Доброе утро"), (12, "Добрый день"),
-     (17, "Добрый день"), (18, "Добрый вечер"), (22, "Добрый вечер"),
-     (23, "Доброй ночи"), (5, "Доброй ночи")],
+    [
+        (6, "Доброе утро"),
+        (11, "Доброе утро"),
+        (12, "Добрый день"),
+        (17, "Добрый день"),
+        (18, "Добрый вечер"),
+        (22, "Добрый вечер"),
+        (23, "Доброй ночи"),
+        (5, "Доброй ночи"),
+    ],
 )
 def test_greet_user(hour: int, expected: str) -> None:
     """Проверяем приветствие на границах каждого временного периода."""
@@ -35,9 +42,7 @@ def test_top_5_transactions(excel_transactions: pd.DataFrame) -> None:
     with patch("src.views.pd.read_excel", return_value=excel_transactions):
         result = views.top_5_transactions("31.05.2026")
 
-    assert result == [
-        {"date": "20.05.2026", "amount": 900.0, "category": "Зарплата", "description": "Доход"}
-    ]
+    assert result == [{"date": "20.05.2026", "amount": 900.0, "category": "Зарплата", "description": "Доход"}]
 
 
 def test_get_currency_rates(settings_file) -> None:

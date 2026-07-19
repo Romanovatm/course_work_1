@@ -1,7 +1,7 @@
 import json
+from unittest.mock import patch
 
 import pandas as pd
-from unittest.mock import patch
 
 from src import services
 

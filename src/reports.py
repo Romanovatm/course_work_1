@@ -1,12 +1,11 @@
 import functools
 import logging
-from typing import Optional, Any, Callable
-
 from datetime import datetime
+from typing import Any, Callable, Optional
+
 import pandas as pd
 from dateutil.relativedelta import relativedelta
 
-from src.services import open_file_transactions
 from src.utils import find_project_root
 
 logger = logging.getLogger("reports")
@@ -16,27 +15,26 @@ file_handler.setFormatter(file_formatter)
 logger.addHandler(file_handler)
 logger.setLevel(logging.DEBUG)
 
-item = open_file_transactions(f"{find_project_root()}/data/operations.xlsx")
 
 def save_report_to(filename: str) -> Callable:
     """Декоратор сохраняет результат работы функции в файл с указанным именем."""
 
-    def decorator(func):
+    def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
-        def wrapper(*args: Any, **kwargs: Any) -> pd.DataFrame:
+        def wrapper(*args: Any, **kwargs: Any) -> Any:
             result = func(*args, **kwargs)
 
             result.to_json(filename, orient="records", force_ascii=False, indent=4)
             print(f"DataFrame успешно записан в файл: {filename}")
             return result
+
         return wrapper
+
     return decorator
 
 
 @save_report_to(f"{find_project_root()}/data/report.json")
-def spending_by_category(transactions: pd.DataFrame,
-                         category: str,
-                         date: Optional[str] = None) -> pd.DataFrame:
+def spending_by_category(transactions: pd.DataFrame, category: str, date: Optional[str] = None) -> pd.DataFrame:
 
     logger.debug("Начало работы функции")
     if date:
@@ -58,9 +56,7 @@ def spending_by_category(transactions: pd.DataFrame,
     df = abs(df["Сумма платежа"].sum())
     logger.debug("Вычислена общая сумма по категории")
 
-    result_df = pd.DataFrame({
-        "Категория": [category],
-        "Сумма": [df]})
+    result_df = pd.DataFrame({"Категория": [category], "Сумма": [df]})
     logger.info("Успешное выполнение функции")
 
     return result_df

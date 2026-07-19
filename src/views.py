@@ -1,7 +1,7 @@
 import json
+import logging
 import os
 from datetime import datetime
-import logging
 
 import pandas as pd
 import requests
@@ -111,7 +111,9 @@ def get_currency_rates() -> list[dict]:
     try:
         response = requests.get(
             f"https://api.fxratesapi.com/latest?"
-            f"api_key={api_key}&base=RUB&currencies={user_settings}&resolution=1d&format=json", timeout=10)
+            f"api_key={api_key}&base=RUB&currencies={user_settings}&resolution=1d&format=json",
+            timeout=10,
+        )
 
         data = response.json()
         logger.debug("Успешное выполнение запроса, перевод в формат JSON")
@@ -136,9 +138,11 @@ def get_currency_rates() -> list[dict]:
         logger.error("API вернул пустой словарь 'rates'")
         return []
 
-    currency_rates = [{"currency": rate, "rate": round(1 / rates.get(rate), 2)}
-                     for rate in rates
-                     if rates.get(rate) and isinstance(rates.get(rate), (int, float)) and rates.get(rate) != 0]
+    currency_rates = [
+        {"currency": rate, "rate": round(1 / rates.get(rate), 2)}
+        for rate in rates
+        if rates.get(rate) and isinstance(rates.get(rate), (int, float)) and rates.get(rate) != 0
+    ]
 
     logger.info("Функция завершилась успешно")
     return currency_rates
@@ -159,8 +163,7 @@ def stock_prices() -> list[dict]:
 
     try:
         response = requests.get(
-            f"https://api.twelvedata.com/price?symbol={user_settings}&apikey={api_key}",
-                timeout=10
+            f"https://api.twelvedata.com/price?symbol={user_settings}&apikey={api_key}", timeout=10
         )
         response.raise_for_status()
 

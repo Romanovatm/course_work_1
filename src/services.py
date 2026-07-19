@@ -23,9 +23,6 @@ def open_file_transactions(file_path: str) -> DataFrame:
     return df
 
 
-item = open_file_transactions(f"{find_project_root()}/data/operations.xlsx")
-
-
 def cashback(data: DataFrame, year: int, month: int) -> str:
     """
     Функция рассчитывает выгодные категории кэшбэка за указанный месяц года
@@ -36,11 +33,13 @@ def cashback(data: DataFrame, year: int, month: int) -> str:
     logger.debug("Задан формат даты операции")
 
     filter_date = data[
-        (data["Дата операции"].dt.year == year) &
-        (data["Дата операции"].dt.month == month) &
-        (data["Статус"] == "OK") &
-        (data["Сумма платежа"] < 0) &
-        (data["Кэшбэк"]) > 0]
+        (data["Дата операции"].dt.year == year)
+        & (data["Дата операции"].dt.month == month)
+        & (data["Статус"] == "OK")
+        & (data["Сумма платежа"] < 0)
+        & (data["Кэшбэк"])
+        > 0
+    ]
     logger.debug("Применены фильтры к таблице")
 
     grouped = filter_date.groupby("Категория")[["Кэшбэк"]].sum().to_dict()
@@ -57,7 +56,7 @@ def cashback(data: DataFrame, year: int, month: int) -> str:
     return json_string
 
 
-def search(user_str:str) -> str:
+def search(user_str: str) -> str:
     """
     Функция ищет строку пользователя в колонках "Описание" и "Категория"
     и возвращает результат в виде JSON-строки
@@ -66,8 +65,9 @@ def search(user_str:str) -> str:
     file = pd.read_excel(f"{find_project_root()}/data/operations.xlsx")
     query = user_str.lower()
 
-    mask = file["Описание"].astype(str).str.lower().str.contains(query, na=False) | \
-           file["Категория"].astype(str).str.lower().str.contains(query, na=False)
+    mask = file["Описание"].astype(str).str.lower().str.contains(query, na=False) | file["Категория"].astype(
+        str
+    ).str.lower().str.contains(query, na=False)
 
     filtered_file = file[mask]
 
@@ -84,10 +84,7 @@ def search_by_mobile_number() -> str:
 
     mobile_number_pattern = r"(?:\+7|8)[\s-]?\(?9\d{2}\)?[\s\d-]{7,11}"
 
-    mask = (
-        file["Описание"]
-        .astype(str)
-        .str.contains(mobile_number_pattern, regex=True, na=False))
+    mask = file["Описание"].astype(str).str.contains(mobile_number_pattern, regex=True, na=False)
 
     filtered_file = file[mask]
 

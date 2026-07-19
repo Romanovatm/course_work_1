@@ -3,59 +3,54 @@
     "cards": [
         {
             "last_digits": "4556",
-            "total_spent": 1749.0,
-            "cashback": 17.49
-        },
-        {
-            "last_digits": "7197",
-            "total_spent": 25400.75,
-            "cashback": 254.01
+            "total_spent": 3543.89,
+            "cashback": 35.44
         }
     ],
     "top_transactions": [
         {
-            "date": "04.04.2021",
-            "amount": 1280.0,
-            "category": "Различные товары",
-            "description": "Яндекс Маркет"
+            "date": "05.11.2019",
+            "amount": 3400.0,
+            "category": "Пополнения",
+            "description": "Пополнение. Тинькофф Банк, 2030 Санкт-Петербург Россия"
         },
         {
-            "date": "07.04.2021",
-            "amount": 266.98,
-            "category": "Супермаркеты",
-            "description": "Магнит"
+            "date": "02.11.2019",
+            "amount": 1000.0,
+            "category": "Пополнения",
+            "description": "Пополнение. Тинькофф Банк, 2030 Санкт-Петербург Россия"
         }
     ],
     "currency_rates": [
         {
             "currency": "EUR",
-            "rate": 88.89
+            "rate": 89.46
         },
         {
             "currency": "USD",
-            "rate": 77.5
+            "rate": 78.2
         }
     ],
     "stock_prices": [
         {
             "stock": "AAPL",
-            "price": 333.29
+            "price": 333.74
         },
         {
             "stock": "AMZN",
-            "price": 249.9
+            "price": 247.26
         },
         {
             "stock": "GOOGL",
-            "price": 354.39
+            "price": 346.62
         },
         {
             "stock": "MSFT",
-            "price": 401.1
+            "price": 393.77
         },
         {
             "stock": "TSLA",
-            "price": 391.0
+            "price": 380.69
         }
     ]
 }
